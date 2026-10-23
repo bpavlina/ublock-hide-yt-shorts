@@ -3,24 +3,24 @@
 A maintained [uBlock Origin](https://github.com/gorhill/uBlock) filter list to hide all traces of YouTube shorts videos.
 
 Copy the link below, go to uBlock Origin > Dashboard > Filter lists, scroll to the bottom, and paste the link underneath the 'Import...' heading:  
-`https://raw.githubusercontent.com/i5heu/ublock-hide-yt-shorts/master/list.txt`
+`https://raw.githubusercontent.com/bpavlina/ublock-hide-yt-shorts/master/list.txt`
 
-[> uBlock Origin subscribe link <](ubo:subscribe?location=https://raw.githubusercontent.com/i5heu/ublock-hide-yt-shorts/master/list.txt) (does not work on GitHub)
+[> uBlock Origin subscribe link <](ubo:subscribe?location=https://raw.githubusercontent.com/bpavlina/ublock-hide-yt-shorts/master/list.txt) (does not work on GitHub)
 
 ## Bonus: hide YouTube Comments
 
-`https://raw.githubusercontent.com/i5heu/ublock-hide-yt-shorts/master/comments.txt`
+`https://raw.githubusercontent.com/bpavlina/ublock-hide-yt-shorts/master/comments.txt`
 
-[> uBlock Origin subscribe link <](ubo:subscribe?location=https://raw.githubusercontent.com/i5heu/ublock-hide-yt-shorts/master/comments.txt) (does not work on GitHub)
+[> uBlock Origin subscribe link <](ubo:subscribe?location=https://raw.githubusercontent.com/bpavlina/ublock-hide-yt-shorts/master/comments.txt) (does not work on GitHub)
 
 ## Bonus: hide YouTube Playables
-`https://raw.githubusercontent.com/i5heu/ublock-hide-yt-shorts/master/playables.txt`
+`https://raw.githubusercontent.com/bpavlina/ublock-hide-yt-shorts/master/playables.txt`
 
-[> uBlock Origin subscribe link <](ubo:subscribe?location=https://raw.githubusercontent.com/i5heu/ublock-hide-yt-shorts/master/playables.txt) (does not work on GitHub)
+[> uBlock Origin subscribe link <](ubo:subscribe?location=https://raw.githubusercontent.com/bpavlina/ublock-hide-yt-shorts/master/playables.txt) (does not work on GitHub)
 
 ## Maintenance
 
-After the initial createor of this list [@gijsdev](https://github.com/gijsdev) is now vanished for half a year, i ( [i5heu](https://heidenstedt.org) ) took it on me to maintain this list.
+Forked from [i5heu/ublock-hide-yt-shorts](https://github.com/i5heu/ublock-hide-yt-shorts), itself a continuation of [gijsdev/ublock-hide-yt-shorts](https://github.com/gijsdev/ublock-hide-yt-shorts). This fork merges the rules from both and prefers plain CSS selectors over `:has-text()`, so they work in any UI language and cost less to run.
 
 ## No affiliation to Alphabet, YouTube or Google
 
