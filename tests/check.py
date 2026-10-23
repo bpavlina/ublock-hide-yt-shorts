@@ -108,20 +108,19 @@ def run(mode, filters):
         dash = ctx.new_page()
         dash.goto(dash_url)
         time.sleep(1.5)
-        counts = None
-        if filters:
-            send = "m => vAPI.messaging.send('dashboard', m)"
-            dash.evaluate(send, {'what': 'writeUserFilters', 'content': filters})
-            # "My filters" starts disabled in a fresh profile.
-            dash.evaluate(send, {'what': 'applyFilterListSelection', 'toSelect': ['user-filters'],
-                                 'toImport': '', 'toRemove': []})
-            dash.evaluate(send, {'what': 'reloadAllFilters'})
-            time.sleep(4)
-            # The reload can close the dashboard tab, so read the counts from a new one.
-            dash = ctx.new_page()
-            dash.goto(dash_url)
-            time.sleep(1.5)
-            counts = dash.evaluate(send, {'what': 'getLists'})['available']['user-filters']
+        # Both runs use the same setup: only "My filters" enabled (it starts disabled in
+        # a fresh profile) and uBO's stock lists off, so they differ only by our lists.
+        send = "m => vAPI.messaging.send('dashboard', m)"
+        dash.evaluate(send, {'what': 'writeUserFilters', 'content': filters})
+        dash.evaluate(send, {'what': 'applyFilterListSelection', 'toSelect': ['user-filters'],
+                             'toImport': '', 'toRemove': []})
+        dash.evaluate(send, {'what': 'reloadAllFilters'})
+        time.sleep(4)
+        # The reload can close the dashboard tab, so read the counts from a new one.
+        dash = ctx.new_page()
+        dash.goto(dash_url)
+        time.sleep(1.5)
+        counts = dash.evaluate(send, {'what': 'getLists'})['available']['user-filters']
         host = 'https://m.youtube.com' if mode == 'mobile' else 'https://www.youtube.com'
         page, out = ctx.new_page(), {}
         for path, keep in PAGES[mode].items():
@@ -146,11 +145,12 @@ def main():
                 if line.strip() and not line.startswith('!'))
     problems = []
     for mode in MODES:
-        base, _ = run(mode, None)
+        base, _ = run(mode, '')
         hidden, counts = run(mode, filters)
         print(mode, json.dumps({'without': base, 'with': hidden, 'filters': counts}, indent=1))
         if counts.get('entryUsedCount') != rules:
-            problems.append(f'{mode}: uBO accepted {counts.get("entryUsedCount")} of {rules} filters')
+            problems.append(f'{mode}: uBO kept {counts.get("entryUsedCount")} of {rules} filters '
+                            '(a line was rejected or is a duplicate)')
         for page in base:
             before, after = base[page].pop('kept'), hidden[page].pop('kept')
             if not before:

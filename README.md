@@ -23,6 +23,7 @@ Rules that match the word "Shorts" (the channel tab, the sidebar entry and the f
 ## Something still shows
 
 - Open uBlock Origin on a YouTube page. If the big power button is grey, filtering is paused for the site; click it and reload.
+- In the same popup, check that cosmetic filtering isn't turned off for YouTube: the eye icon (under "More" if the icons are hidden) must not be crossed out. If it is, click it, click the padlock to save, and reload.
 - In the Dashboard, on the Filter lists page, check that the list is ticked and that "Parse and enforce cosmetic filters" is on.
 - Update the list as described above, then reload YouTube.
 - In Brave, a blank space where the Shorts tab used to be comes from Brave Shields' own "YouTube Shorts" list, which hides only the tab's text. This list removes the whole tab, so the gap usually means uBlock Origin isn't filtering the page. Check the points above.

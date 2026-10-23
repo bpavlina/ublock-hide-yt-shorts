@@ -20,7 +20,7 @@ www.youtube.com##:matches-path(/^(?!\/feed\/history)/)ytd-video-renderer:has([ov
 www.youtube.com##:matches-path(/^(?!\/feed\/history)/)ytd-rich-item-renderer:has(ytm-shorts-lockup-view-model, ytm-shorts-lockup-view-model-v2)
 
 ! Shorts shelves on search page
-www.youtube.com##grid-shelf-view-model:has(a[href^="/shorts/"])
+www.youtube.com##:matches-path(/^(?!\/feed\/history)/)grid-shelf-view-model:has(a[href^="/shorts/"])
 
 ! Shorts filter chip on homepage and search page
 www.youtube.com##yt-chip-cloud-chip-renderer:has-text(/^\s*Shorts\s*$/)
@@ -47,7 +47,7 @@ m.youtube.com##:matches-path(/^(?!\/feed\/history)/)ytm-rich-section-renderer:ha
 m.youtube.com##:matches-path(/^(?!\/feed\/history)/)ytm-video-with-context-renderer:has([data-style="SHORTS"], .big-shorts-singleton)
 
 ! Shorts shelves on search page
-m.youtube.com##grid-shelf-view-model:has(ytm-shorts-lockup-view-model)
+m.youtube.com##:matches-path(/^(?!\/feed\/history)/)grid-shelf-view-model:has(ytm-shorts-lockup-view-model)
 
 ! Shorts button in the bottom navigation bar
 m.youtube.com##ytm-pivot-bar-item-renderer:has(.pivot-shorts)
