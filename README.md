@@ -24,11 +24,7 @@ Forked from [i5heu/ublock-hide-yt-shorts](https://github.com/i5heu/ublock-hide-y
 
 ## Checks
 
-A GitHub Action (`.github/workflows/check.yml`) loads the lists into real uBlock Origin every Monday, and on every change to a list, then visits a few YouTube pages on desktop and mobile. It fails if anything the lists should hide is still visible, or if the pages no longer show the elements it looks for. Run it locally with:
-
-```
-UBO_PATH=path/to/uBlock0.chromium uv run --with playwright==1.49.0 python tests/check.py
-```
+A GitHub Action loads the lists into real uBlock Origin every Monday and on every list change, then checks live YouTube pages on desktop and mobile. See [MAINTAINING.md](MAINTAINING.md) for how the lists are written and tested, and what to do when the check fails.
 
 ## No affiliation to Alphabet, YouTube or Google
 
