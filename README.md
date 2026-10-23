@@ -6,19 +6,21 @@ YouTube changes its pages often, and a change can stop a rule from working. The 
 
 ## Subscribe
 
-In uBlock Origin, open the Dashboard, go to **Filter lists**, scroll to the bottom, tick **Import…**, paste a link below and click **Apply changes**.
+With uBlock Origin installed, click **Subscribe** next to a list and confirm in the page uBlock Origin opens.
 
-| List | Hides | Link |
-| --- | --- | --- |
-| Shorts | Shorts shelves on the homepage, subscriptions, search, channel pages and under videos; single Shorts in feeds and search results; the Shorts tab on channels; the Shorts button in the sidebar and the mobile bottom bar; the Shorts filter chip; Shorts notifications | `https://raw.githubusercontent.com/bpavlina/ublock-hide-yt-shorts/master/list.txt` |
-| Playables (optional) | Playables shelves, game cards and the sidebar entry | `https://raw.githubusercontent.com/bpavlina/ublock-hide-yt-shorts/master/playables.txt` |
-| Comments (optional) | Desktop only: the comment section under videos and the comment button on Shorts | `https://raw.githubusercontent.com/bpavlina/ublock-hide-yt-shorts/master/comments.txt` |
+If that doesn't work, open the uBlock Origin Dashboard, go to **Filter lists**, scroll to the bottom, tick **Import…**, paste the list's address and click **Apply changes**.
+
+| List | Hides | Subscribe | Address |
+| --- | --- | --- | --- |
+| Shorts | Shorts shelves on the homepage, subscriptions, search, channel pages and under videos; single Shorts in feeds and search results; the Shorts tab on channels; the Shorts button in the sidebar and the mobile bottom bar; the Shorts filter chip; Shorts notifications | [Subscribe](https://subscribe.adblockplus.org/?location=https%3A%2F%2Fraw.githubusercontent.com%2Fbpavlina%2Fublock-hide-yt-shorts%2Fmaster%2Flist.txt&title=Hide%20YouTube%20Shorts) | `https://raw.githubusercontent.com/bpavlina/ublock-hide-yt-shorts/master/list.txt` |
+| Playables (optional) | Playables shelves, game cards and the sidebar entry | [Subscribe](https://subscribe.adblockplus.org/?location=https%3A%2F%2Fraw.githubusercontent.com%2Fbpavlina%2Fublock-hide-yt-shorts%2Fmaster%2Fplayables.txt&title=Hide%20YouTube%20Playables) | `https://raw.githubusercontent.com/bpavlina/ublock-hide-yt-shorts/master/playables.txt` |
+| Comments (optional) | Desktop only: the comment section under videos and the comment button on Shorts | [Subscribe](https://subscribe.adblockplus.org/?location=https%3A%2F%2Fraw.githubusercontent.com%2Fbpavlina%2Fublock-hide-yt-shorts%2Fmaster%2Fcomments.txt&title=Hide%20YouTube%20comments) | `https://raw.githubusercontent.com/bpavlina/ublock-hide-yt-shorts/master/comments.txt` |
 
 Shorts you have watched stay visible on your History page.
 
 With automatic updates on, uBlock Origin updates these lists about every four days. To get a fix right away, click the clock icon next to the list on the Filter lists page, click **Update now**, then reload YouTube.
 
-Rules that match the word "Shorts" (the channel tab, the sidebar entry and the filter chip) only work when YouTube is set to a language that uses that word.
+The Shorts list works in every language YouTube offers, including those that translate "Shorts", such as Japanese (ショート) and Afrikaans (Kortvideo's).
 
 ## Something still shows
 

@@ -1,14 +1,14 @@
 ! Title: Hide YouTube Shorts
 ! Description: Hide all traces of YouTube shorts videos on YouTube
-! Version: 2026.10.23.1
-! Last modified: 2026-10-23 04:00
+! Version: 2026.10.23.2
+! Last modified: 2026-10-23 13:27
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/bpavlina/ublock-hide-yt-shorts
 ! License: https://github.com/bpavlina/ublock-hide-yt-shorts/blob/master/LICENSE.md
 
 ! Most rules are plain CSS, which uBO hands to the browser. :has-text() is used only
-! where nothing else identifies the element. Rules matching a label ("Shorts") only
-! work when YouTube is set to a language that uses that word.
+! where nothing else identifies the element. Rules matching a label ("Shorts") list
+! the word in every YouTube interface language that translates it.
 ! Content rules skip the History page, so watched Shorts stay listed there.
 
 ! Shorts shelves (homepage, channel Home tab, watch page, Shorts remixes, subscriptions) except on history page
@@ -26,14 +26,14 @@ www.youtube.com##:matches-path(/^(?!\/feed\/history)/)grid-shelf-view-model:has(
 www.youtube.com##:matches-path(/^(?!\/feed\/history)/)yt-horizontal-list-renderer ytm-shorts-lockup-view-model-v2
 
 ! Shorts filter chip on homepage and search page
-www.youtube.com##yt-chip-cloud-chip-renderer:has-text(/^\s*Shorts\s*$/)
+www.youtube.com##yt-chip-cloud-chip-renderer:has-text(/^\s*(Shorts|Kortvideo\x27s|YouTube Shorts|Video Fupi|Kratki videoposnetki|Šortsi|Кыска видеолор|Шортси|کوته\u200cویدیوها|ショート)\s*$/)
 
 ! Shorts button in sidebar (full and mini guide)
-www.youtube.com##ytd-guide-entry-renderer:has(> a[title="Shorts"])
-www.youtube.com##ytd-mini-guide-entry-renderer:has(> a[title="Shorts"])
+www.youtube.com##ytd-guide-entry-renderer:has(> a:is([title="Shorts"],[title="Kortvideo's"],[title="YouTube Shorts"],[title="Video Fupi"],[title="Kratki videoposnetki"],[title="Šortsi"],[title="Кыска видеолор"],[title="Шортси"],[title="کوته‌ویدیوها"],[title="ショート"]))
+www.youtube.com##ytd-mini-guide-entry-renderer:has(> a:is([title="Shorts"],[title="Kortvideo's"],[title="YouTube Shorts"],[title="Video Fupi"],[title="Kratki videoposnetki"],[title="Šortsi"],[title="Кыска видеолор"],[title="Шортси"],[title="کوته‌ویدیوها"],[title="ショート"]))
 
 ! Shorts tab on channel pages
-www.youtube.com##yt-tab-shape[tab-title="Shorts"]
+www.youtube.com##yt-tab-shape:is([tab-title="Shorts"],[tab-title="Kortvideo's"],[tab-title="Curts"],[tab-title="Lühivideod"],[tab-title="YouTube Shorts"],[tab-title="Ama-Short"],[tab-title="Short"],[tab-title="Video Fupi"],[tab-title="Shorts-videoer"],[tab-title="Kratki videoposnetki"],[tab-title="Šorts"],[tab-title="Кыска видеолор"],[tab-title="Шортс"],[tab-title="Կարճ հոլովակներ"],[tab-title="کوته‌ویدیوها"],[tab-title="მოკლე ვიდეოები"],[tab-title="ショート"])
 
 ! Shorts in the notifications area
 www.youtube.com##ytd-notification-renderer:has(> a[href^="/shorts/"])
@@ -59,7 +59,7 @@ m.youtube.com##:matches-path(/^(?!\/feed\/history)/)ytm-horizontal-card-list-ren
 m.youtube.com##ytm-pivot-bar-item-renderer:has(.pivot-shorts)
 
 ! Shorts tab on channel pages
-m.youtube.com##yt-tab-shape[tab-title="Shorts"]
+m.youtube.com##yt-tab-shape:is([tab-title="Shorts"],[tab-title="Kortvideo's"],[tab-title="Curts"],[tab-title="Lühivideod"],[tab-title="YouTube Shorts"],[tab-title="Ama-Short"],[tab-title="Short"],[tab-title="Video Fupi"],[tab-title="Shorts-videoer"],[tab-title="Kratki videoposnetki"],[tab-title="Šorts"],[tab-title="Кыска видеолор"],[tab-title="Шортс"],[tab-title="Կարճ հոլովակներ"],[tab-title="کوته‌ویدیوها"],[tab-title="მოკლე ვიდეოები"],[tab-title="ショート"])
 
 ! Shorts filter chip on homepage
-m.youtube.com##ytm-chip-cloud-chip-renderer:has-text(/^\s*Shorts\s*$/)
+m.youtube.com##ytm-chip-cloud-chip-renderer:has-text(/^\s*(Shorts|Kortvideo\x27s|YouTube Shorts|Video Fupi|Kratki videoposnetki|Šortsi|Кыска видеолор|Шортси|کوته\u200cویدیوها|ショート)\s*$/)
