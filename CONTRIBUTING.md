@@ -29,4 +29,4 @@ Hide the outer element, not just its label, or an empty slot is left behind.
 ## Point to the specific elements
 It's not always immediately clear what elements you're talking about. Try to include a screenshot of the elements or a link to a specific page where you will find the elements.
 ## Run the check before opening a pull request
-With the Chromium build of uBlock Origin unzipped somewhere, run `UBO_PATH=path/to/uBlock0.chromium uv run --with playwright==1.49.0 python tests/check.py`. Add `--offline` to test only against the saved pages in `tests/fixtures`, which takes about a minute.
+Install the test browser once with `uvx --from playwright==1.49.0 playwright install chromium`. Then, with the Chromium build of uBlock Origin unzipped somewhere, run `UBO_PATH=path/to/uBlock0.chromium uv run --with playwright==1.49.0 python tests/check.py`. Add `--offline` to test only against the saved pages in `tests/fixtures`, which takes about a minute.

@@ -139,9 +139,13 @@ def fixture_file(mode, path):
 
 def snapshot_html(html):
     """Shrink a rendered page to what the filters can see: drop scripts, links, SVG
-    drawings and iframes, and remove the test account's identity (SCRUB)."""
+    drawings, iframes and image addresses, and remove the test account's identity (SCRUB)."""
     html = re.sub(r'<script\b.*?</script>|<link\b[^>]*>|<iframe\b.*?</iframe>', '', html, flags=re.S | re.I)
     html = re.sub(r'(<svg\b[^>]*>).*?</svg>', r'\1</svg>', html, flags=re.S | re.I)
+    # Image addresses aren't needed, and one of them is the test account's avatar.
+    html = re.sub(r'(<img\b[^>]*?)\s(?:src|srcset)="[^"]*"', r'\1', html, flags=re.I)
+    html = re.sub(r'(<img\b[^>]*?)\s(?:src|srcset)="[^"]*"', r'\1', html, flags=re.I)
+    html = re.sub(r'https?://[^"\'()\s]*(?:ggpht\.com|googleusercontent\.com|ytimg\.com)[^"\'()\s]*', '', html)
     if os.environ.get('SCRUB'):
         html = re.sub(os.environ['SCRUB'], 'x', html, flags=re.I)
     return html
