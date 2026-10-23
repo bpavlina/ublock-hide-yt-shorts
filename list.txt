@@ -1,14 +1,14 @@
 ! Title: Hide YouTube Shorts
-! Description: Hide all traces of YouTube shorts videos on YouTube
-! Version: 2026.10.23.2
-! Last modified: 2026-10-23 13:27
+! Description: Hide YouTube Shorts shelves, feed entries and navigation
+! Version: 2026.10.23.3
+! Last modified: 2026-10-23 13:41
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/bpavlina/ublock-hide-yt-shorts
 ! License: https://github.com/bpavlina/ublock-hide-yt-shorts/blob/master/LICENSE.md
 
 ! Most rules are plain CSS, which uBO hands to the browser. :has-text() is used only
-! where nothing else identifies the element. Rules matching a label ("Shorts") list
-! the word in every YouTube interface language that translates it.
+! where nothing else identifies the element. Rules matching a label ("Shorts") include
+! the translations YouTube uses in its interface languages.
 ! Content rules skip the History page, so watched Shorts stay listed there.
 
 ! Shorts shelves (homepage, channel Home tab, watch page, Shorts remixes, subscriptions) except on history page
@@ -29,7 +29,7 @@ www.youtube.com##:matches-path(/^(?!\/feed\/history)/)yt-horizontal-list-rendere
 www.youtube.com##yt-chip-cloud-chip-renderer:has-text(/^\s*(Shorts|Kortvideo\x27s|YouTube Shorts|Video Fupi|Kratki videoposnetki|Šortsi|Кыска видеолор|Шортси|کوته\u200cویدیوها|ショート)\s*$/)
 
 ! Shorts button in sidebar (full and mini guide)
-www.youtube.com##ytd-guide-entry-renderer:has(> a:is([title="Shorts"],[title="Kortvideo's"],[title="YouTube Shorts"],[title="Video Fupi"],[title="Kratki videoposnetki"],[title="Šortsi"],[title="Кыска видеолор"],[title="Шортси"],[title="کوته‌ویدیوها"],[title="ショート"]))
+www.youtube.com##ytd-guide-entry-renderer[is-primary]:has(> a:is([title="Shorts"],[title="Kortvideo's"],[title="YouTube Shorts"],[title="Video Fupi"],[title="Kratki videoposnetki"],[title="Šortsi"],[title="Кыска видеолор"],[title="Шортси"],[title="کوته‌ویدیوها"],[title="ショート"]))
 www.youtube.com##ytd-mini-guide-entry-renderer:has(> a:is([title="Shorts"],[title="Kortvideo's"],[title="YouTube Shorts"],[title="Video Fupi"],[title="Kratki videoposnetki"],[title="Šortsi"],[title="Кыска видеолор"],[title="Шортси"],[title="کوته‌ویدیوها"],[title="ショート"]))
 
 ! Shorts tab on channel pages

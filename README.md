@@ -20,7 +20,7 @@ Shorts you have watched stay visible on your History page.
 
 With automatic updates on, uBlock Origin updates these lists about every four days. To get a fix right away, click the clock icon next to the list on the Filter lists page, click **Update now**, then reload YouTube.
 
-The Shorts list works in every language YouTube offers, including those that translate "Shorts", such as Japanese (ショート) and Afrikaans (Kortvideo's).
+The Shorts tab, sidebar entry and filter chip are matched by their label, and the list includes the translations YouTube uses, such as Japanese (ショート) and Afrikaans (Kortvideo's).
 
 ## Something still shows
 
