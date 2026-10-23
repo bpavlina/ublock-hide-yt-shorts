@@ -1,7 +1,7 @@
 ! Title: Hide YouTube Shorts
 ! Description: Hide all traces of YouTube shorts videos on YouTube
-! Version: 2026.10.23
-! Last modified: 2026-10-23 01:00
+! Version: 2026.10.23.1
+! Last modified: 2026-10-23 04:00
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/bpavlina/ublock-hide-yt-shorts
 ! License: https://github.com/bpavlina/ublock-hide-yt-shorts/blob/master/LICENSE.md
@@ -21,6 +21,9 @@ www.youtube.com##:matches-path(/^(?!\/feed\/history)/)ytd-rich-item-renderer:has
 
 ! Shorts shelves on search page
 www.youtube.com##:matches-path(/^(?!\/feed\/history)/)grid-shelf-view-model:has(a[href^="/shorts/"])
+
+! Single Shorts in mixed rows (e.g. a channel's "For You" shelf)
+www.youtube.com##:matches-path(/^(?!\/feed\/history)/)yt-horizontal-list-renderer ytm-shorts-lockup-view-model-v2
 
 ! Shorts filter chip on homepage and search page
 www.youtube.com##yt-chip-cloud-chip-renderer:has-text(/^\s*Shorts\s*$/)
@@ -48,6 +51,9 @@ m.youtube.com##:matches-path(/^(?!\/feed\/history)/)ytm-video-with-context-rende
 
 ! Shorts shelves on search page
 m.youtube.com##:matches-path(/^(?!\/feed\/history)/)grid-shelf-view-model:has(ytm-shorts-lockup-view-model)
+
+! Single Shorts in mixed rows (e.g. a channel's "For You" shelf)
+m.youtube.com##:matches-path(/^(?!\/feed\/history)/)ytm-horizontal-card-list-renderer ytm-shorts-lockup-view-model
 
 ! Shorts button in the bottom navigation bar
 m.youtube.com##ytm-pivot-bar-item-renderer:has(.pivot-shorts)
