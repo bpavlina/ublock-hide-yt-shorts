@@ -1,16 +1,29 @@
 ! Title: Hide YouTube Playables
-! Description: Hide all traces of YouTube playables videos on YouTube
-! Version: 2026.3.13
-! Last modified: 2026-03-13 12:23
-! Expires: 2 weeks (update frequency)
+! Description: Hide all traces of YouTube Playables (mini games) on YouTube
+! Version: 2026.10.22
+! Last modified: 2026-10-22 23:00
+! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/bpavlina/ublock-hide-yt-shorts
 ! License: https://github.com/bpavlina/ublock-hide-yt-shorts/blob/master/LICENSE.md
 
-! Hide on Homepage
-www.youtube.com##ytd-rich-section-renderer:has(a[href^="/playables/"])
+! Playables shelves on homepage
+www.youtube.com##ytd-rich-section-renderer:has([is-mini-game-card-shelf], a[href^="/playables"])
 
-! Hide on search page
-www.youtube.com##ytd-search grid-shelf-view-model:has(a[href^="/playables/"])
+! Single Playables cards in grids
+www.youtube.com##ytd-rich-item-renderer:has(ytd-mini-game-card-view-model)
 
-! Hide shorts category on homepage
-m.youtube.com##ytm-chip-cloud-chip-renderer:has(.yt-core-attributed-string:has-text(/^YouTube Playables$/i))
+! Playables shelves on search page
+www.youtube.com##grid-shelf-view-model:has(a[href^="/playables"])
+
+! Playables button in sidebar (full and mini guide)
+www.youtube.com##ytd-guide-entry-renderer:has(> a[href^="/playables"])
+www.youtube.com##ytd-mini-guide-entry-renderer:has(> a[href^="/playables"])
+
+!!! MOBILE !!!
+
+! Playables cards and shelves
+m.youtube.com##ytm-rich-item-renderer:has(mini-game-card-view-model)
+m.youtube.com##ytm-rich-section-renderer:has(mini-game-card-view-model)
+
+! Playables chip on homepage
+m.youtube.com##ytm-chip-cloud-chip-renderer:has-text(/^\s*(YouTube )?Playables\s*$/i)

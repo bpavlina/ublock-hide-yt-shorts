@@ -1,0 +1,42 @@
+name: Check lists against live YouTube
+
+on:
+  schedule:
+    - cron: '17 6 * * 1'  # Mondays
+  workflow_dispatch:
+  push:
+    branches: [master]
+    paths: ['*.txt', 'tests/**', '.github/workflows/check.yml']
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      UBO_VERSION: 1.75.0
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - name: Fetch uBlock Origin
+        run: |
+          gh release download "$UBO_VERSION" -R gorhill/uBlock -p '*.chromium.zip' -O "$RUNNER_TEMP/ubo.zip"
+          unzip -q "$RUNNER_TEMP/ubo.zip" -d "$RUNNER_TEMP"
+      - name: Install Chromium
+        run: uvx --from playwright==1.49.0 playwright install --with-deps chromium
+      - name: Check
+        run: UBO_PATH="$RUNNER_TEMP/uBlock0.chromium" uv run --no-project --with playwright==1.49.0 python tests/check.py
+      - name: Open an issue
+        # One open issue at a time; later failures just show in the Actions tab.
+        if: failure() && github.event_name == 'schedule'
+        run: |
+          if [ -z "$(gh issue list -R "$GITHUB_REPOSITORY" --label check-failed --state open --json number -q '.[].number')" ]; then
+            gh label create check-failed -R "$GITHUB_REPOSITORY" --color d73a4a --force
+            gh issue create -R "$GITHUB_REPOSITORY" --label check-failed \
+              --title "Weekly YouTube check failed" \
+              --body "The weekly check found something the lists no longer hide, or could no longer see the page. See $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          fi

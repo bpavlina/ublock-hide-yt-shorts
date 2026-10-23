@@ -1,12 +1,12 @@
 ! Title: Hide YouTube Comments
 ! Description: Hide YouTube comments on YouTube
-! Version: 2026.3.13
-! Last modified: 2026-03-13 12:38
-! Expires: 2 weeks (update frequency)
+! Version: 2026.10.22
+! Last modified: 2026-10-22 23:00
+! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/bpavlina/ublock-hide-yt-shorts
 ! License: https://github.com/bpavlina/ublock-hide-yt-shorts/blob/master/LICENSE.md
 
-www.youtube.com###comments > .ytd-comments.style-scope
+www.youtube.com###comments
 
 ! Hide comments on Short pages
 www.youtube.com##reel-action-bar-view-model dislike-button-view-model + *
