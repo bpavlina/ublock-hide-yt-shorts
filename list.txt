@@ -1,22 +1,23 @@
 ! Title: Hide YouTube Shorts
 ! Description: Hide all traces of YouTube shorts videos on YouTube
-! Version: 2026.10.22.1
-! Last modified: 2026-10-22 23:00
+! Version: 2026.10.23
+! Last modified: 2026-10-23 01:00
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/bpavlina/ublock-hide-yt-shorts
 ! License: https://github.com/bpavlina/ublock-hide-yt-shorts/blob/master/LICENSE.md
 
-! Element and attribute selectors are plain CSS (uBO's :has() runs natively in the browser),
-! so they apply before first paint and don't depend on the UI language.
-! :has-text() is kept only where nothing else identifies the element.
+! Most rules are plain CSS, which uBO hands to the browser. :has-text() is used only
+! where nothing else identifies the element. Rules matching a label ("Shorts") only
+! work when YouTube is set to a language that uses that word.
+! Content rules skip the History page, so watched Shorts stay listed there.
 
 ! Shorts shelves (homepage, channel Home tab, watch page, Shorts remixes, subscriptions) except on history page
 www.youtube.com##:matches-path(/^(?!\/feed\/history)/)ytd-reel-shelf-renderer
-www.youtube.com##ytd-rich-section-renderer:has(ytd-rich-shelf-renderer[is-shorts])
+www.youtube.com##:matches-path(/^(?!\/feed\/history)/)ytd-rich-section-renderer:has(ytd-rich-shelf-renderer[is-shorts])
 
 ! Single Shorts in video lists and grids
-www.youtube.com##ytd-video-renderer:has([overlay-style="SHORTS"], a[href^="/shorts/"])
-www.youtube.com##ytd-rich-item-renderer:has(ytm-shorts-lockup-view-model, ytm-shorts-lockup-view-model-v2)
+www.youtube.com##:matches-path(/^(?!\/feed\/history)/)ytd-video-renderer:has([overlay-style="SHORTS"], a[href^="/shorts/"])
+www.youtube.com##:matches-path(/^(?!\/feed\/history)/)ytd-rich-item-renderer:has(ytm-shorts-lockup-view-model, ytm-shorts-lockup-view-model-v2)
 
 ! Shorts shelves on search page
 www.youtube.com##grid-shelf-view-model:has(a[href^="/shorts/"])
@@ -43,7 +44,7 @@ m.youtube.com##:matches-path(/^(?!\/feed\/history)/)ytm-reel-shelf-renderer
 m.youtube.com##:matches-path(/^(?!\/feed\/history)/)ytm-rich-section-renderer:has(ytm-shorts-lockup-view-model)
 
 ! Single Shorts in video lists
-m.youtube.com##ytm-video-with-context-renderer:has([data-style="SHORTS"], .big-shorts-singleton)
+m.youtube.com##:matches-path(/^(?!\/feed\/history)/)ytm-video-with-context-renderer:has([data-style="SHORTS"], .big-shorts-singleton)
 
 ! Shorts shelves on search page
 m.youtube.com##grid-shelf-view-model:has(ytm-shorts-lockup-view-model)

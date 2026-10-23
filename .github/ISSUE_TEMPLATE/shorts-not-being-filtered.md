@@ -1,26 +1,25 @@
 ---
-name: Shorts not being filtered
-about: Report a Shorts element that's not being filtered.
+name: Filter list problem
+about: Report something the lists miss, or something they hide by mistake.
 title: ''
 labels: bug
 assignees: ''
 
 ---
 
-**Desktop or Mobile:**
-Are you on a desktop device or a mobile device?
+## List
+Shorts, Playables or Comments?
 
-**Browser:**
-What browser are you using? (Firefox, Brave, etc.)
+## Page URL
+Paste the address of the page with the problem.
 
-**Extension:**
-In what extension are you importing this list? (uBlock, Adblock Plus, etc.)
+## Screenshot
+Add a screenshot showing the problem.
 
-**URL of the page you saw Shorts:**
-Paste the URL where the Shorts element(s) were not being filtered.
+## Device
+Desktop or mobile?
 
-**Screenshots**
-Add a screenshot of the Shorts element.
+## Browser and blocker
+For example: Firefox with uBlock Origin, or Brave with uBlock Origin.
 
-**Additional context**
-Add any other context about the problem here.
+## Anything else

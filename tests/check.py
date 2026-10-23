@@ -4,6 +4,8 @@ For every page, the same metrics are taken without and with the lists.
 The check fails when:
   - uBO rejects a filter line,
   - anything a list should hide is still visible with the lists loaded,
+  - a page fails to load, or loses more than half its ordinary content
+    (videos, tabs, player controls) with the lists loaded,
   - a metric is zero on every page even without the lists (YouTube changed
     its markup or blocked the runner, so the check can no longer see it).
 
@@ -40,12 +42,14 @@ PAGES = {
         '/@mkbhd/featured' + Q: WATCH_LINKS,
         '/@madseasonshow/shorts' + Q: 'yt-tab-shape[tab-title="Videos"]',
         '/playables' + Q: 'ytd-rich-grid-renderer',
-        '/watch' + Q + '&v=jNQXAC9IVRw': '#movie_player',
+        '/watch' + Q + '&v=dQw4w9WgXcQ': '#movie_player',
+        '/shorts/Y8IJi7iP5vk' + Q: 'reel-action-bar-view-model like-button-view-model',
     },
     'mobile': {
         '/results' + Q + '&search_query=minecraft': 'ytm-video-with-context-renderer ' + WATCH_LINKS,
         '/@mkbhd/featured' + Q: WATCH_LINKS,
         '/playables' + Q: 'ytm-rich-grid-renderer',
+        '/watch' + Q + '&v=dQw4w9WgXcQ': 'ytm-slim-video-metadata-section-renderer',
     },
 }
 COOKIES = os.environ.get('YT_COOKIES')
@@ -56,18 +60,20 @@ if COOKIES:
 METRICS = """keep => {
   const vis = e => e.checkVisibility();
   const count = sel => [...document.querySelectorAll(sel)].filter(vis).length;
-  const labelled = re => [...document.querySelectorAll(
-      'yt-tab-shape, yt-chip-cloud-chip-renderer, ytm-chip-cloud-chip-renderer, ' +
-      'ytd-guide-entry-renderer, ytd-mini-guide-entry-renderer, ytm-pivot-bar-item-renderer')]
-    .filter(e => vis(e) && re.test(e.textContent)).length;
+  const shorts = sel => [...document.querySelectorAll(sel)]
+    .filter(e => vis(e) && /^\\s*Shorts\\s*$/.test(e.textContent)).length;
   return {
     shorts_links: count('a[href^="/shorts/"]'),
-    shorts_labels: labelled(/^\\s*Shorts\\s*$/),
+    shorts_tab: shorts('yt-tab-shape'),
+    shorts_chip: shorts('yt-chip-cloud-chip-renderer, ytm-chip-cloud-chip-renderer'),
+    shorts_guide: shorts('ytd-guide-entry-renderer, ytd-mini-guide-entry-renderer'),
+    shorts_pivot: shorts('ytm-pivot-bar-item-renderer'),
     // A tab whose label is hidden but which still takes up space (and links to /shorts).
     empty_tabs: [...document.querySelectorAll('yt-tab-shape[tab-title]')]
       .filter(e => vis(e) && !e.innerText.trim()).length,
     playables_links: count('a[href^="/playables"]'),  // game cards and the sidebar entry
     comments: count('#comments'),
+    comment_buttons: count('reel-action-bar-view-model button[aria-label*="comment" i]'),
     kept: count(keep),
     // Where leaked links sit, so a failure report says what to fix.
     where: [...document.querySelectorAll('a[href^="/shorts/"], a[href^="/playables"]')].filter(vis).slice(0, 3)
@@ -75,11 +81,12 @@ METRICS = """keep => {
         c.push(e.tagName.toLowerCase() + (e.id ? '#' + e.id : '')); return c.join(' < '); }),
   };
 }"""
-# Metrics the pages above must show without the lists. empty_tabs is zero
-# without the lists too, and mobile has no comments on these pages.
+# Metrics the pages above must show without the lists, so each rule is really
+# exercised. empty_tabs is zero without the lists too; comments.txt is desktop only.
 SEEN = {
-    'desktop': {'shorts_links', 'shorts_labels', 'playables_links', 'comments'},
-    'mobile': {'shorts_links', 'shorts_labels', 'playables_links'},
+    'desktop': {'shorts_links', 'shorts_tab', 'shorts_chip', 'shorts_guide',
+                'playables_links', 'comments', 'comment_buttons'},
+    'mobile': {'shorts_links', 'shorts_tab', 'shorts_pivot', 'playables_links'},
 }
 
 
@@ -134,7 +141,9 @@ def run(mode, filters):
 
 def main():
     filters = '\n'.join((ROOT / name).read_text() for name in LISTS)
-    rules = sum(1 for line in filters.splitlines() if line.strip() and not line.startswith('!'))
+    # uBO counts one entry per hostname and drops lines it rejects.
+    rules = sum(len(line.split('##')[0].split(',')) for line in filters.splitlines()
+                if line.strip() and not line.startswith('!'))
     problems = []
     for mode in MODES:
         base, _ = run(mode, None)
@@ -142,11 +151,14 @@ def main():
         print(mode, json.dumps({'without': base, 'with': hidden, 'filters': counts}, indent=1))
         if counts.get('entryUsedCount') != rules:
             problems.append(f'{mode}: uBO accepted {counts.get("entryUsedCount")} of {rules} filters')
-        for run_name, pages in (('without', base), ('with', hidden)):
-            for page, metrics in pages.items():
-                if not metrics.pop('kept'):
-                    problems.append(f'{mode} {page}: normal content missing {run_name} the lists '
-                                    '(page failed to load, or a list hides too much)')
+        for page in base:
+            before, after = base[page].pop('kept'), hidden[page].pop('kept')
+            if not before:
+                problems.append(f'{mode} {page}: normal content missing without the lists '
+                                '(page failed to load or changed)')
+            elif after * 2 < before:
+                problems.append(f'{mode} {page}: normal content dropped from {before} to {after} '
+                                'with the lists (page failed to load, or a list hides too much)')
         for page, metrics in hidden.items():
             where = metrics.pop('where')
             base[page].pop('where')
