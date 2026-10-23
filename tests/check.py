@@ -108,12 +108,12 @@ def run(mode, filters):
         dash = ctx.new_page()
         dash.goto(dash_url)
         time.sleep(1.5)
-        # Both runs use the same setup: only "My filters" enabled (it starts disabled in
-        # a fresh profile) and uBO's stock lists off, so they differ only by our lists.
+        # Both runs use the same setup: uBO's default lists plus "My filters" (which
+        # starts disabled in a fresh profile), so they differ only by our lists.
         send = "m => vAPI.messaging.send('dashboard', m)"
         dash.evaluate(send, {'what': 'writeUserFilters', 'content': filters})
         dash.evaluate(send, {'what': 'applyFilterListSelection', 'toSelect': ['user-filters'],
-                             'toImport': '', 'toRemove': []})
+                             'merge': True, 'toImport': '', 'toRemove': []})
         dash.evaluate(send, {'what': 'reloadAllFilters'})
         time.sleep(4)
         # The reload can close the dashboard tab, so read the counts from a new one.
@@ -124,7 +124,13 @@ def run(mode, filters):
         host = 'https://m.youtube.com' if mode == 'mobile' else 'https://www.youtube.com'
         page, out = ctx.new_page(), {}
         for path, keep in PAGES[mode].items():
-            resp = page.goto(host + path, wait_until='load')
+            # Google sometimes rate-limits CI runners (429 and a /sorry/ page); wait it out.
+            for wait in (30, 90, None):
+                resp = page.goto(host + path, wait_until='load')
+                if not (resp and resp.status == 429) or wait is None:
+                    break
+                print(f'{mode} {path}: rate-limited, retrying in {wait}s', flush=True)
+                time.sleep(wait)
             if not resp or resp.status >= 400 or not page.url.startswith(host):
                 raise SystemExit(f'{mode} {path}: got {resp and resp.status} at {page.url}')
             page.wait_for_timeout(5000)
