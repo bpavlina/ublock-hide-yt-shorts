@@ -2,8 +2,8 @@
 
 I only want to state a couple of rules when submitting a pull request:
 
-## Only include YouTube Shorts
-The function is in the repository name.
+## Keep each list to its subject
+Shorts rules go in `list.txt`, Playables rules in `playables.txt`, comment rules in `comments.txt`. Nothing else.
 
 ## Never change the metadata on top of the list
 *Metadata = Title, Version, Last modified etc. on the top of the list.*
@@ -21,7 +21,7 @@ Don't keep unnecessary `.style-scope` classes in your filter, for example.
 Always try to select an element which has the name or text "Shorts" in it, or which only appears for Shorts (for example `ytm-shorts-lockup-view-model` or `[overlay-style="SHORTS"]`), so normal videos are never hidden.
 
 ## Avoid :has-text() and :upward()
-Use element names, attributes and native `:has()` where you can. They run as plain CSS and work in every UI language. Use `:has-text()` only when nothing else identifies the element. See [MAINTAINING.md](MAINTAINING.md#writing-rules).
+Use element names, attributes and native `:has()` where you can. They run as plain CSS and work in every UI language. Use `:has-text()` only when nothing else identifies the element.
 
 ## Hide the whole element
 Hide the outer element, not just its label, or an empty slot is left behind.
