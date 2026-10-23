@@ -145,7 +145,7 @@ def snapshot_html(html):
     # Image addresses aren't needed, and one of them is the test account's avatar.
     html = re.sub(r'(<img\b[^>]*?)\s(?:src|srcset)="[^"]*"', r'\1', html, flags=re.I)
     html = re.sub(r'(<img\b[^>]*?)\s(?:src|srcset)="[^"]*"', r'\1', html, flags=re.I)
-    html = re.sub(r'https?://[^"\'()\s]*(?:ggpht\.com|googleusercontent\.com|ytimg\.com)[^"\'()\s]*', '', html)
+    html = re.sub(r'https?://[^"\'()\s&]*(?:ggpht\.com|googleusercontent\.com|ytimg\.com)[^"\'()\s&]*', '', html)
     if os.environ.get('SCRUB'):
         html = re.sub(os.environ['SCRUB'], 'x', html, flags=re.I)
     return html
