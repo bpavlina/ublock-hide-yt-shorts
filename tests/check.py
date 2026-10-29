@@ -58,7 +58,8 @@ PAGES = {
         '/@mkbhd/featured' + Q: WATCH_LINKS,
         '/@madseasonshow/shorts' + Q: 'yt-tab-shape[tab-title="Videos"]',
         '/playables' + Q: 'ytd-rich-grid-renderer',
-        '/watch' + Q + '&v=dQw4w9WgXcQ': '#movie_player',
+        # A video whose related list includes single Shorts (they don't show up on every video).
+        '/watch' + Q + '&v=w_Hh5REKwn8': '#movie_player',
         '/shorts/Y8IJi7iP5vk' + Q: 'reel-action-bar-view-model like-button-view-model',
     },
     'mobile': {

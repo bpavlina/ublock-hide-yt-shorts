@@ -1,7 +1,7 @@
 ! Title: Hide YouTube Shorts
 ! Description: Hide YouTube Shorts shelves, feed entries and navigation
-! Version: 2026.10.23.3
-! Last modified: 2026-10-23 13:41
+! Version: 2026.10.29.1
+! Last modified: 2026-10-29 13:16
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/bpavlina/ublock-hide-yt-shorts
 ! License: https://github.com/bpavlina/ublock-hide-yt-shorts/blob/master/LICENSE.md
@@ -24,6 +24,9 @@ www.youtube.com##:matches-path(/^(?!\/feed\/history)/)grid-shelf-view-model:has(
 
 ! Single Shorts in mixed rows (e.g. a channel's "For You" shelf)
 www.youtube.com##:matches-path(/^(?!\/feed\/history)/)yt-horizontal-list-renderer ytm-shorts-lockup-view-model-v2
+
+! Single Shorts in the watch page's related videos
+www.youtube.com##ytd-watch-next-secondary-results-renderer yt-lockup-view-model:has(a[href^="/shorts/"])
 
 ! Shorts filter chip on homepage and search page
 www.youtube.com##yt-chip-cloud-chip-renderer:has-text(/^\s*(Shorts|Kortvideo\x27s|YouTube Shorts|Video Fupi|Kratki videoposnetki|Šortsi|Кыска видеолор|Шортси|کوته\u200cویدیوها|ショート)\s*$/)
